@@ -5,6 +5,7 @@ describe('PrismaService', () => {
   let service: PrismaService;
 
   beforeEach(async () => {
+    vi.stubEnv('DATABASE_URL', 'postgresql://test:test@localhost:5432/test');
     const module: TestingModule = await Test.createTestingModule({
       providers: [PrismaService],
     }).compile();
@@ -14,5 +15,9 @@ describe('PrismaService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
   });
 });
