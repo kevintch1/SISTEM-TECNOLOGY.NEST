@@ -3,9 +3,8 @@ import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
-import { CategoryModule } from './category/category.module.js';
-import { ProductModule } from './product/product.module.js';
-import { PurchaseDetailModule } from './purchase-detail/purchase-detail.module.js';
+import { ClientsModule } from './clients/clients.module.js';
+import { EmployeesModule } from './employees/employees.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -20,9 +19,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'sistem-nest',
     }),
     PrismaModule,
-    CategoryModule,
-    ProductModule,
-    PurchaseDetailModule,
+    ClientsModule,
+    EmployeesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
