@@ -29,7 +29,20 @@
 
 ```bash
 $ npm install
+$ npx prisma generate
 ```
+
+Set `DATABASE_URL` in `.env` to the PostgreSQL database used by the existing
+project. The Prisma client is generated from the existing schema; do not run
+migrations against the already populated database for this exercise.
+
+## Sales modules
+
+`PrismaModule` provides a global `PrismaService`. The `SalesModule` and
+`SaleDetailsModule` use it to expose the existing records:
+
+- `GET /sales`
+- `GET /sale-details`
 
 ## Compile and run the project
 
