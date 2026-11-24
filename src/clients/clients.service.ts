@@ -8,7 +8,7 @@ export class ClientsService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createClientDto: CreateClientDto) {
-    return this.prisma.client.create({ data: CreateClientDto });
+    return this.prisma.client.create({ data: createClientDto });
   }
 
   findAll() {
