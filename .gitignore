@@ -1,8 +1,10 @@
 .env
+/src/generated
 # compiled output
 /dist
 /node_modules
 /build
+/src/generated
 
 # TypeScript build cache
 *.tsbuildinfo
