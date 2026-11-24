@@ -3,6 +3,8 @@ import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { SupplierModule } from './supplier/supplier.module.js';
+import { PurchaseModule } from './purchase/purchase.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -17,6 +19,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'sistem-nest',
     }),
     PrismaModule,
+    SupplierModule,
+    PurchaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
