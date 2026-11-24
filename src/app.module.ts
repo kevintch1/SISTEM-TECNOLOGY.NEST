@@ -11,7 +11,7 @@ import { ProductModule } from './product/product.module.js';
 import { PurchaseDetailModule } from './purchase-detail/purchase-detail.module.js';
 import { ConfigModule } from '@nestjs/config';
 
-=======
+
 import { SaleDetailsModule } from './sale-details/sale-details.module.js';
 import { SalesModule } from './sales/sales.module.js';
 import { ClientsModule } from './clients/clients.module.js';
@@ -35,9 +35,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'sistem-nest',
     }),
     PrismaModule,
+    CategoryModule,
+    ProductModule,
+    PurchaseDetailModule,
 
-    SupplierModule,
-    PurchaseModule,
 
     SalesModule,
     SaleDetailsModule,
