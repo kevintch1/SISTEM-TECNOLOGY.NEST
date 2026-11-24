@@ -9,7 +9,7 @@ export class EmployeesService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
-    return this.prisma.employee.create({ data: CreateEmployeeDto });
+    return this.prisma.employee.create({ data: createEmployeeDto });
   }
 
   findAll() {
