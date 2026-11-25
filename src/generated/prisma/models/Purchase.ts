@@ -39,20 +39,14 @@ export type PurchaseSumAggregateOutputType = {
 export type PurchaseMinAggregateOutputType = {
   id: number | null
   date: Date | null
-
   deletedAt: Date | null
-
-
   supplierId: number | null
 }
 
 export type PurchaseMaxAggregateOutputType = {
   id: number | null
   date: Date | null
-
   deletedAt: Date | null
-
-
   supplierId: number | null
 }
 
@@ -60,7 +54,6 @@ export type PurchaseCountAggregateOutputType = {
   id: number
   date: number
   deletedAt: number
-
   supplierId: number
   _all: number
 }
@@ -80,7 +73,6 @@ export type PurchaseMinAggregateInputType = {
   id?: true
   date?: true
   deletedAt?: true
-
   supplierId?: true
 }
 
@@ -189,7 +181,6 @@ export type PurchaseGroupByOutputType = {
   id: number
   date: Date
   deletedAt: Date | null
-
   supplierId: number
   _count: PurchaseCountAggregateOutputType | null
   _avg: PurchaseAvgAggregateOutputType | null
@@ -220,7 +211,6 @@ export type PurchaseWhereInput = {
   id?: Prisma.IntFilter<"Purchase"> | number
   date?: Prisma.DateTimeFilter<"Purchase"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
-
   supplierId?: Prisma.IntFilter<"Purchase"> | number
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   details?: Prisma.PurchaseDetailListRelationFilter
@@ -242,7 +232,6 @@ export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PurchaseWhereInput | Prisma.PurchaseWhereInput[]
   date?: Prisma.DateTimeFilter<"Purchase"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Purchase"> | Date | string | null
-
   supplierId?: Prisma.IntFilter<"Purchase"> | number
   supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   details?: Prisma.PurchaseDetailListRelationFilter
@@ -252,7 +241,6 @@ export type PurchaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   date?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-
   supplierId?: Prisma.SortOrder
   _count?: Prisma.PurchaseCountOrderByAggregateInput
   _avg?: Prisma.PurchaseAvgOrderByAggregateInput
@@ -268,15 +256,12 @@ export type PurchaseScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Purchase"> | number
   date?: Prisma.DateTimeWithAggregatesFilter<"Purchase"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Purchase"> | Date | string | null
-
   supplierId?: Prisma.IntWithAggregatesFilter<"Purchase"> | number
 }
 
 export type PurchaseCreateInput = {
   date?: Date | string
   deletedAt?: Date | string | null
-
- master
   supplier: Prisma.SupplierCreateNestedOneWithoutPurchasesInput
   details?: Prisma.PurchaseDetailCreateNestedManyWithoutPurchaseInput
 }

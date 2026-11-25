@@ -11,7 +11,6 @@ import { ProductModule } from './product/product.module.js';
 import { PurchaseDetailModule } from './purchase-detail/purchase-detail.module.js';
 import { ConfigModule } from '@nestjs/config';
 
-
 import { SaleDetailsModule } from './sale-details/sale-details.module.js';
 import { SalesModule } from './sales/sales.module.js';
 import { ClientsModule } from './clients/clients.module.js';
@@ -20,7 +19,6 @@ import { EmployeesModule } from './employees/employees.module.js';
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 @Module({
   imports: [
-
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -39,14 +37,12 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ProductModule,
     PurchaseDetailModule,
 
-
     SalesModule,
     SaleDetailsModule,
     ClientsModule,
     EmployeesModule,
-
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
