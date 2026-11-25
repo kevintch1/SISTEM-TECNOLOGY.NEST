@@ -14,6 +14,8 @@ export class SalesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSaleDto: CreateSaleDto) {
+    this.validateSaleDate(createSaleDto.date);
+
     try {
       return await this.prisma.sale.create({ data: createSaleDto });
     } catch (error) {
@@ -41,6 +43,8 @@ export class SalesService {
   }
 
   async replace(id: number, replaceSaleDto: ReplaceSaleDto) {
+    this.validateSaleDate(replaceSaleDto.date);
+
     try {
       return await this.prisma.sale.update({
         where: { id },
@@ -52,6 +56,8 @@ export class SalesService {
   }
 
   async update(id: number, updateSaleDto: UpdateSaleDto) {
+    this.validateSaleDate(updateSaleDto.date);
+
     try {
       return await this.prisma.sale.update({
         where: { id },
@@ -67,6 +73,12 @@ export class SalesService {
       return await this.prisma.sale.delete({ where: { id } });
     } catch (error) {
       this.handleWriteError(error);
+    }
+  }
+
+  private validateSaleDate(date?: string) {
+    if (date !== undefined && new Date(date).getTime() > Date.now()) {
+      throw new BadRequestException('La fecha de venta no puede ser futura');
     }
   }
 
