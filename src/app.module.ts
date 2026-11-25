@@ -33,6 +33,8 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'sistem-nest',
     }),
     PrismaModule,
+    SupplierModule,
+    PurchaseModule,
     CategoryModule,
     ProductModule,
     PurchaseDetailModule,
