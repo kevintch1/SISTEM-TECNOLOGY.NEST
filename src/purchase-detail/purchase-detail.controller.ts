@@ -1,9 +1,14 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, UseGuards } from '@nestjs/common';
 import { PurchaseDetailService } from './purchase-detail.service.js';
 import { CreatePurchaseDetailDto } from './dto/create-purchase-detail.dto.js';
 import { UpdatePurchaseDetailDto } from './dto/update-purchase-detail.dto.js';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../auth/guards/roles.guard.js';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 
 @Controller('purchase-detail')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles('ADMIN', 'CAJERO')
 export class PurchaseDetailController {
   constructor(private readonly purchaseDetailService: PurchaseDetailService) { }
 
