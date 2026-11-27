@@ -3,12 +3,13 @@ import { createObserveModule } from '@nestjs/observe';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { SupplierModule } from './supplier/supplier.module.js';
+import { PurchaseModule } from './purchase/purchase.module.js';
 
 import { CategoryModule } from './category/category.module.js';
 import { ProductModule } from './product/product.module.js';
 import { PurchaseDetailModule } from './purchase-detail/purchase-detail.module.js';
 import { ConfigModule } from '@nestjs/config';
-
 
 import { SaleDetailsModule } from './sale-details/sale-details.module.js';
 import { SalesModule } from './sales/sales.module.js';
@@ -18,7 +19,6 @@ import { EmployeesModule } from './employees/employees.module.js';
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 @Module({
   imports: [
-
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -33,10 +33,11 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       serviceId: 'sistem-nest',
     }),
     PrismaModule,
+    SupplierModule,
+    PurchaseModule,
     CategoryModule,
     ProductModule,
     PurchaseDetailModule,
-
 
     SalesModule,
     SaleDetailsModule,
@@ -46,4 +47,4 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

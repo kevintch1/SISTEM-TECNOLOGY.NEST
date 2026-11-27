@@ -1162,6 +1162,7 @@ export type SupplierScalarFieldEnum = (typeof SupplierScalarFieldEnum)[keyof typ
 export const PurchaseScalarFieldEnum = {
   id: 'id',
   date: 'date',
+  deletedAt: 'deletedAt',
   supplierId: 'supplierId'
 } as const
 
