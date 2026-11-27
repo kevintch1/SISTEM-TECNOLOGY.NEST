@@ -15,7 +15,7 @@ import { SaleDetailsModule } from './sale-details/sale-details.module.js';
 import { SalesModule } from './sales/sales.module.js';
 import { ClientsModule } from './clients/clients.module.js';
 import { EmployeesModule } from './employees/employees.module.js';
-
+import { AuthModule } from './auth/auth.module.js';
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 @Module({
   imports: [
@@ -43,6 +43,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     SaleDetailsModule,
     ClientsModule,
     EmployeesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

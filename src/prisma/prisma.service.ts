@@ -6,10 +6,12 @@ import { PrismaClient } from '../generated/prisma/client.js';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
-    const adapter = new PrismaPg({
-      connectionString: process.env.DATABASE_URL,
-    });
-    super({ adapter });
+    const connectionString = process.env.DATABASE_URL;
+    if (!connectionString) {
+      throw new Error('DATABASE_URL must be set to connect to PostgreSQL.');
+    }
+
+    super({ adapter: new PrismaPg({ connectionString }) });
   }
 
   async onModuleInit() {

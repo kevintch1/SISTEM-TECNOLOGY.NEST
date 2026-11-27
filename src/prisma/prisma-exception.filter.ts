@@ -1,35 +1,34 @@
 import {
-    ArgumentsHost,
-    Catch,
-    ConflictException,
-    ExceptionFilter,
-    NotFoundException,
+  ArgumentsHost,
+  Catch,
+  ConflictException,
+  ExceptionFilter,
+  NotFoundException,
 } from '@nestjs/common';
-
+import type { Response } from 'express';
 import { Prisma } from '../generated/prisma/client.js';
 
 @Catch(Prisma.PrismaClientKnownRequestError)
-export class PrismaExceptionFilter implements ExceptionFilter {
-    catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
-        const response = host.switchToHttp().getResponse();
+export class PrismaExceptionFilter implements ExceptionFilter<Prisma.PrismaClientKnownRequestError> {
+  catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
+    let httpException: ConflictException | NotFoundException;
 
-        switch (exception.code) {
-            case 'P2002': {
-                const error = new ConflictException(
-                    'Ya existe un registro con ese valor único',
-                );
-
-                return response.status(error.getStatus()).json(error.getResponse());
-            }
-
-            case 'P2025': {
-                const error = new NotFoundException('Registro no encontrado');
-
-                return response.status(error.getStatus()).json(error.getResponse());
-            }
-
-            default:
-                throw exception;
-        }
+    switch (exception.code) {
+      case 'P2002':
+        httpException = new ConflictException(
+          'Ya existe un registro con ese valor único',
+        );
+        break;
+      case 'P2025':
+        httpException = new NotFoundException('Registro no encontrado');
+        break;
+      default:
+        throw exception;
     }
+
+    const response = host.switchToHttp().getResponse<Response>();
+    response
+      .status(httpException.getStatus())
+      .json(httpException.getResponse());
+  }
 }

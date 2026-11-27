@@ -84,10 +84,6 @@ export class SalesService {
 
   private handleWriteError(error: unknown): never {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('Sale not found');
-      }
-
       if (error.code === 'P2003') {
         throw new BadRequestException(
           'The sale references a missing client or employee, or still has details',

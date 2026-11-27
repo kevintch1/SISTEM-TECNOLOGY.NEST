@@ -4,114 +4,130 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-    provider = "prisma-client"
-    output   = "../src/generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
-    provider = "postgresql"
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  CAJERO
+  CLIENTE
+
+  @@map("user_role")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         UserRole @default(CLIENTE)
+
+  @@map("users")
 }
 
 model Category {
-    id       Int       @id @default(autoincrement())
-    name     String    @unique
-    products Product[]
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
 
-    @@map("categories")
+  @@map("categories")
 }
 
 model Product {
-    id          Int     @id @default(autoincrement())
-    name        String
-    description String?
-    price       Decimal
-    stock       Int     @default(0)
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  price       Decimal
+  stock       Int     @default(0)
 
-    category   Category @relation(fields: [categoryId], references: [id])
-    categoryId Int      @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int      @map("category_id")
 
-    purchaseDetails PurchaseDetail[]
-    saleDetails     SaleDetail[]
+  purchaseDetails PurchaseDetail[]
+  saleDetails     SaleDetail[]
 
-    @@map("products")
+  @@map("products")
 }
 
 model Supplier {
-    id        Int        @id @default(autoincrement())
-    name      String
-    phone     String?
-    purchases Purchase[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  phone     String?
+  purchases Purchase[]
 
-    @@map("suppliers")
+  @@map("suppliers")
 }
 
 model Purchase {
-    id   Int      @id @default(autoincrement())
-    date DateTime @default(now())
-    deletedAt DateTime? @map("deleted_at")
+  id   Int      @id @default(autoincrement())
+  date DateTime @default(now())
 
-    supplier   Supplier @relation(fields: [supplierId], references: [id])
-    supplierId Int      @map("supplier_id")
+  supplier   Supplier @relation(fields: [supplierId], references: [id])
+  supplierId Int      @map("supplier_id")
 
-    details PurchaseDetail[]
+  details PurchaseDetail[]
 
-    @@map("purchases")
+  @@map("purchases")
 }
 
 model PurchaseDetail {
-    id        Int     @id @default(autoincrement())
-    quantity  Int
-    unitPrice Decimal @map("unit_price")
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  unitPrice Decimal @map("unit_price")
 
-    purchase   Purchase @relation(fields: [purchaseId], references: [id])
-    purchaseId Int      @map("purchase_id")
-    product    Product  @relation(fields: [productId], references: [id])
-    productId  Int      @map("product_id")
+  purchase   Purchase @relation(fields: [purchaseId], references: [id])
+  purchaseId Int      @map("purchase_id")
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int      @map("product_id")
 
-    @@map("purchase_details")
+  @@map("purchase_details")
 }
 
 model Client {
-    id    Int     @id @default(autoincrement())
-    name  String
-    email String? @unique
-    sales Sale[]
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String? @unique
+  sales Sale[]
 
-    @@map("clients")
+  @@map("clients")
 }
 
 model Employee {
-    id       Int     @id @default(autoincrement())
-    name     String
-    position String?
-    sales    Sale[]
+  id       Int     @id @default(autoincrement())
+  name     String
+  position String?
+  sales    Sale[]
 
-    @@map("employees")
+  @@map("employees")
 }
 
 model Sale {
-    id   Int      @id @default(autoincrement())
-    date DateTime @default(now())
+  id   Int      @id @default(autoincrement())
+  date DateTime @default(now())
 
-    client     Client   @relation(fields: [clientId], references: [id])
-    clientId   Int      @map("client_id")
-    employee   Employee @relation(fields: [employeeId], references: [id])
-    employeeId Int      @map("employee_id")
+  client     Client   @relation(fields: [clientId], references: [id])
+  clientId   Int      @map("client_id")
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  employeeId Int      @map("employee_id")
 
-    details SaleDetail[]
+  details SaleDetail[]
 
-    @@map("sales")
+  @@map("sales")
 }
 
 model SaleDetail {
-    id        Int     @id @default(autoincrement())
-    quantity  Int
-    unitPrice Decimal @map("unit_price")
+  id        Int     @id @default(autoincrement())
+  quantity  Int
+  unitPrice Decimal @map("unit_price")
 
-    sale      Sale    @relation(fields: [saleId], references: [id])
-    saleId    Int     @map("sale_id")
-    product   Product @relation(fields: [productId], references: [id])
-    productId Int     @map("product_id")
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  saleId    Int     @map("sale_id")
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int     @map("product_id")
 
-    @@map("sale_details")
+  @@map("sale_details")
 }
