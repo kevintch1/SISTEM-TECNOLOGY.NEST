@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule, ObserveInstrument } from './app.module.js';
 import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { PrismaExceptionFilter } from './prisma/prisma-exception.filter.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -16,15 +16,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.useGlobalFilters(new PrismaExceptionFilter());
 
-  const config = new DocumentBuilder()
-    .setTitle('API Sistema Tecnologico')
-    .setDescription('Documentacion de la API')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 3000);
 }
 await bootstrap();
