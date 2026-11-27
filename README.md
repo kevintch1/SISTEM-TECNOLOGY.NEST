@@ -28,21 +28,43 @@
 ## Project setup
 
 ```bash
-$ npm install
-$ npx prisma generate
+$ pnpm install
 ```
 
-Set `DATABASE_URL` in `.env` to the PostgreSQL database used by the existing
-project. The Prisma client is generated from the existing schema; do not run
-migrations against the already populated database for this exercise.
+Set `DATABASE_URL` and `JWT_SECRET` in `.env`. Apply the additive user-table
+migration and generate the Prisma client:
+
+```bash
+$ pnpm exec prisma migrate deploy
+$ pnpm exec prisma generate
+```
+
+For an existing database, confirm its earlier migrations are already recorded
+or baselined before running `migrate deploy`; it applies all pending migrations.
+
+Set `ADMIN_EMAIL` and an `ADMIN_PASSWORD` of at least 12 characters in `.env`,
+then create or refresh the initial administrator:
+
+```bash
+$ pnpm exec prisma db seed
+```
 
 ## Sales modules
 
 `PrismaModule` provides a global `PrismaService`. The `SalesModule` and
-`SaleDetailsModule` use it to expose the existing records:
+`SaleDetailsModule` require a bearer token. Public registration creates
+`CLIENTE` accounts only; an administrator creates additional accounts through
+`POST /auth/users`.
 
-- `GET /sales`
-- `GET /sale-details`
+| Role      | GET | POST | PUT/PATCH | DELETE |
+| --------- | --- | ---- | --------- | ------ |
+| `ADMIN`   | Yes | Yes  | Yes       | Yes    |
+| `CAJERO`  | Yes | Yes  | Yes       | No     |
+| `CLIENTE` | Yes | No   | No        | No     |
+
+Use `POST /auth/register` to register a client and `POST /auth/login` to get a
+token. Send it as `Authorization: Bearer <token>` to `/sales` and
+`/sale-details`.
 
 ## Compile and run the project
 
