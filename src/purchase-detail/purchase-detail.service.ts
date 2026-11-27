@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePurchaseDetailDto } from './dto/create-purchase-detail.dto.js';
 import { UpdatePurchaseDetailDto } from './dto/update-purchase-detail.dto.js';
 import { PrismaService } from '../prisma/prisma.service.js';
@@ -22,14 +22,20 @@ export class PurchaseDetailService {
     });
   }
 
-  findOne(id: number) {
-    return this.prisma.purchaseDetail.findUnique({
+  async findOne(id: number) {
+    const detail = await this.prisma.purchaseDetail.findUnique({
       where: { id },
       include: {
         product: true,
         purchase: true
       }
     });
+
+    if (!detail) {
+      throw new NotFoundException('Registro no encontrado');
+    }
+
+    return detail;
   }
 
   update(id: number, data: UpdatePurchaseDetailDto) {
