@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateClientDto } from './dto/create-client.dto.js';
 import { UpdateClientDto } from './dto/update-client.dto.js';
@@ -15,8 +15,12 @@ export class ClientsService {
     return this.prisma.client.findMany();
   }
 
-  findOne(id: number) {
-    return this.prisma.client.findUnique({ where: { id } });
+  async findOne(id: number) {
+    const client = await this.prisma.client.findUnique({ where: { id } });
+    if (!client) {
+      throw new NotFoundException(`Cliente con id ${id} no encontrado`);
+    }
+    return client;
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {
